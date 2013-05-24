@@ -1,6 +1,7 @@
 // these modules need to be imported in order to use them.
 // Node has several modules.  They are like any #include
 // or import statement in other languages
+// Author Mauricio Batista
 var http = require("http");
 var url = require("url");
 
