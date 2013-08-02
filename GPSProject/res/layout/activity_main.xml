@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/longitude"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@id/longitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="42dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/longitude" />
+
+    <TextView
+        android:id="@+id/longitudetxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/longitude"
+        android:layout_marginLeft="61dp"
+        android:layout_toRightOf="@id/longitude"
+        android:text="@string/longitude_text" />
+
+    <TextView
+        android:id="@+id/latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/longitude"
+        android:layout_below="@id/longitude"
+        android:layout_marginTop="27dp"
+        android:text="@string/latitude" />
+
+    <TextView
+        android:id="@+id/latitudetxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/latitude"
+        android:layout_marginLeft="46dp"
+        android:layout_toRightOf="@id/longitude"
+        android:text="@string/latitude_text" />
+
+    <TextView
+        android:id="@+id/mode_ringtone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/longitudetxt"
+        android:layout_below="@+id/latitudetxt"
+        android:layout_marginTop="124dp"
+        android:text="@string/ringtone_mode" />
+
+    <TextView
+        android:id="@+id/mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/mode_ringtone"
+        android:layout_alignLeft="@+id/latitude"
+        android:text="@string/mode" />
+
+</RelativeLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GPSProject</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="longitude">Longitude: </string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude_text" />
+    <string name="latitude_text" />
+    <string name="location_not_available">Location not available</string>
+    <string name="point">%.4f</string>
+    <string name="ringtone_mode">default</string>
+    <string name="mode">Ringtone:</string>
+    <string name="iniciar">Iniciar</string>
+    <string name="parar">Parar</string>
+    <string name="label">Serviço parado</string>
+    <string name="title_activity_iniciar_servico">IniciarServico</string>
+    <string name="title_activity_main__screen">Main_Screen</string>
+    <string name="ambiente">Ambiente</string>
+    <string name="settings">Settings</string>
+    <string name="title_activity_screen_ccadastro">Screen_ccadastro</string>
+    <string name="lat_gps">Lat:</string>
+    <string name="lon_gps">Lon:</string>
+    <string name="nome">Nome:</string>
+    <string name="raio">Raio:</string>
+    <string name="perfil">Perfil:</string>
+    
+    <string-array name="ringtone_modes">
+        <item>Normal</item>
+        <item>Silent</item>
+        <item>Vibrate</item>
+    </string-array>
+    <string name="btSave">Save</string>
+    <string name="btCancel">Cancel</string>
+    <string name="label_mts">0 mts</string>
+    
+</resources>
