@@ -17,21 +17,35 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <service android:name="br.edu.ifpb.services.ContadorService" >
+        
+   		<service android:name="br.edu.ifpb.services.GPSService">
             <intent-filter>
                 <action android:name="SERVICE_1" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+        
+		<service android:name="br.edu.ifpb.services.ContadorService" >
+            <intent-filter>
+                <action android:name="SERVICE_2" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+   		
         <activity
             android:name="br.edu.ifpb.view.MainActivity"
             android:label="@string/app_name" >
+            
         </activity>
         <activity
             android:name="br.edu.ifpb.control.IniciarServico"
             android:label="@string/title_activity_iniciar_servico" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="br.edu.ifpb.view.Main_Screencreen"
@@ -40,10 +54,7 @@
         <activity
             android:name="br.edu.ifpb.view.Screen_ccadastro"
             android:label="@string/title_activity_screen_ccadastro" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
         </activity>
     </application>
 

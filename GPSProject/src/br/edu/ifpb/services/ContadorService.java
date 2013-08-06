@@ -2,11 +2,14 @@ package br.edu.ifpb.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
 
-public class ContadorService extends Service implements Runnable{
+public class ContadorService extends Service implements Runnable, LocationListener{
 
 	
 	private static final int MAX = 10;
@@ -58,6 +61,31 @@ public class ContadorService extends Service implements Runnable{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void onLocationChanged(Location loc) {
+		
+		Log.d("Localização", String.valueOf(loc.getLatitude()));
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

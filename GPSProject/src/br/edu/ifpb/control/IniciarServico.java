@@ -1,19 +1,16 @@
 package br.edu.ifpb.control;
 
-import br.edu.ifpb.R;
-import br.edu.ifpb.R.id;
-import br.edu.ifpb.R.layout;
-import br.edu.ifpb.R.menu;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import br.edu.ifpb.R;
 
 public class IniciarServico extends Activity {
 
@@ -38,8 +35,10 @@ public class IniciarServico extends Activity {
 			public void onClick(View v) {
 				//Iniciar o Serviço
 				ComponentName cn = startService(it);	
-				if(cn != null)
-					txv.setText("O serviço fica executando em segundo plano");
+				Log.d("IniciarServico", "O serviço fica executando em segundo plano");
+				if(cn != null){
+					txv.setText("O serviço fica executando em segundo plano");					
+				}
 			}
 			
 		});
@@ -50,6 +49,7 @@ public class IniciarServico extends Activity {
 			public void onClick(View v) {
 				//Parar o Serviço;
 				stopService(it);
+				Log.d("Parar Serviço", "Parando o serviço...");
 			}
 		});
 		

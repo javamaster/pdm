@@ -36,7 +36,7 @@ public class MainActivity extends Activity implements LocationListener {
 		audio_manager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
 		// Altera o modo atual do ringtone para o modo Silencioso
-		audio_manager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+		audio_manager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
 
 		// Obtem o modo atual do ringtone
 		int mode = audio_manager.getRingerMode();
