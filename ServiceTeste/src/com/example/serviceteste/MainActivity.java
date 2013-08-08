@@ -1,10 +1,15 @@
 package com.example.serviceteste;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
+	
+	private Button button;
+	private TextView view;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
