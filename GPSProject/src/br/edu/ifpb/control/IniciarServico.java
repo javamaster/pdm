@@ -24,6 +24,8 @@ public class IniciarServico extends Activity {
 		setContentView(R.layout.form_service);
 		
 		final Intent it = new Intent("SERVICE_1");
+		final Intent GPSTesteIT = new Intent("SERVICE_3");
+		
 		Button btIniciar = (Button) findViewById(R.id.iniciar_bt);
 		Button btParar = (Button) findViewById(R.id.parar_bt);
 		final TextView txv = (TextView) findViewById(R.id.label);
@@ -34,7 +36,8 @@ public class IniciarServico extends Activity {
 			@Override
 			public void onClick(View v) {
 				//Iniciar o Serviço
-				ComponentName cn = startService(it);	
+				
+				ComponentName cn = startService(GPSTesteIT);	
 				Log.d("IniciarServico", "O serviço fica executando em segundo plano");
 				if(cn != null){
 					txv.setText("O serviço fica executando em segundo plano");					

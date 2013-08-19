@@ -18,7 +18,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
-public class GPSService extends Service implements LocationListener, Runnable {
+public class GPSService extends Service implements  Runnable, LocationListener{
 
 	private LocationManager locationManager;
 	private AudioManager audioManager;
@@ -29,20 +29,22 @@ public class GPSService extends Service implements LocationListener, Runnable {
 	private int count = 0;
 	private int MAX = 10;
 	private static final long MIN_TIME_UPDATES  = 1000 * 60 * 1;
+	
 
 	private Context con;
 	
 	
 	@Override
 	public void onCreate() {
-		
-		Log.i("Criar Serviço", "Startando a Service GPS");
-		
-//		geocoder = new Geocoder(this,Locale.getDefault());
-		
-		//Delega para uma thread
+		super.onCreate();		
+	}
+	
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		// TODO Auto-generated method stub
+		Log.i("iniciar Serviço", "Startando a Service GPS - onStartCommand");
 		new Thread(this).start();
-		
+		return START_STICKY;
 	}
 	
 	
@@ -62,42 +64,55 @@ public class GPSService extends Service implements LocationListener, Runnable {
 		//stopSelf();
 		
 	}
+
 	
 		
 	private void printLocation(){
 		
-		LocationManager locationManager;
-		String provider;
+		String provider = null;
 		
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+		//Criterios definidos para escolher o melhor provedor de localização
+		Criteria criteria = new Criteria(); 
 		
-		//Permite definir alguns criterios para escolher um provedor
-		Criteria criteria = new Criteria();
+		//Obter o gerenciador de localizacao do SO 
+		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		
-		if (locationManager != null) {
-			//Obtém o melhor provedor, de acordo com os criterios definidos 
-			provider = locationManager.getBestProvider(criteria, false);
+		
+		//locationManager.requestLocationUpdates(provider, 0 , 0, this);
+		if(locationManager != null){
 			
-			 //locationManager.getProvider(LocationManager.GPS_PROVIDER);
-			//locationManager.getProvider(LocationManager.NETWORK_PROVIDER);
+		//audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 			
-			Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-			//locationManager.requestLocationUpdates(provider,MIN_TIME_UPDATES , MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+		//obter o provedor segundo os criterios definidos
+		provider = locationManager.getBestProvider(criteria, false);
 			
-			if(location != null){				
-				Log.i("INFO", "Provedor "+provider+" foi selecionado");
-				onLocationChanged(location);				
-			}
-			else {
-				Log.e("GPS", "Provedor nao foi selecionado");
-			}
+		//Obter a localização atual do usuário;
+		Location location = locationManager.getLastKnownLocation(provider);
 		
+		if(location != null){				
+			Log.i("INFO", "Provedor "+provider+" foi selecionado");
+			onLocationChanged(location);				
+			
+			
 		}
-		else{
-			
-			Log.e("GPS", "Não foi possivel acessar a API do gps");
+		else {
+			Log.e("GPS", "Provedor nao foi selecionado");
 		}
+		
+		}else {
+			Log.e("GPS", "não foi possivel acessar LocationManager");
+		}
+		
+	}
+	
+	private LocationManager getLocationManager(String provider,long min_time,float min_distance, LocationListener loc){
+		
+		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(provider, min_time , min_distance, loc);
+		
+		return locationManager;
+		
+		
 	}
 	
 	private String getNewLocation(Context context){
@@ -108,7 +123,7 @@ public class GPSService extends Service implements LocationListener, Runnable {
 		try {
 			
 			List<Address> adresses = geocoder.getFromLocation(latitude, longitude, 1);
-			Address adress = adresses.get(0);
+			Address adress = adresses.get(0);		
 			
 			StringBuilder sb = new StringBuilder();
 			
@@ -131,37 +146,35 @@ public class GPSService extends Service implements LocationListener, Runnable {
 		return localeAdress;
 		
 	}
-
+	
 
 	@Override
-	public void onLocationChanged(Location loc) {
-
-		double latitude = loc.getLatitude();
-		double longitude = loc.getLongitude();
+	public void onLocationChanged(Location location) {
+		double latitude = location.getLatitude();
+		double longitude = location.getLongitude();
 		
 		Log.i("Latitude", String.valueOf(latitude));
 		Log.i("Longitude", String.valueOf(longitude));
 		
 	}
 
-
 	@Override
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
 		
 	}
 
-
 	@Override
-	public void onProviderDisabled(String arg0) {
+	public void onProviderEnabled(String provider) {
 		// TODO Auto-generated method stub
 		
 	}
 
-
 	@Override
-	public void onProviderEnabled(String arg0) {
+	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// TODO Auto-generated method stub
 		
 	}
 }
+
+

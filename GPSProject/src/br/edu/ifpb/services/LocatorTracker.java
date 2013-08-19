@@ -27,21 +27,25 @@ public class LocatorTracker extends Service implements LocationListener{
 	
 	public LocatorTracker() {}
 	
-	public LocatorTracker(Context con){
-		
-		context = con;		
+	public LocatorTracker(Context context){
+		this.context = context;
 		
 		printLocation();
 	}
 	
 	
-	   private void printLocation(){
+	private void printLocation(){
 			
 			LocationManager locationManager;
 			String provider;
 			
+			
+			
 			locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 	//		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+			
+			isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+			isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 			
 			//Permite definir alguns criterios para escolher um provedor
 			Criteria criteria = new Criteria();
@@ -52,7 +56,7 @@ public class LocatorTracker extends Service implements LocationListener{
 			 //locationManager.getProvider(LocationManager.GPS_PROVIDER);
 			//locationManager.getProvider(LocationManager.NETWORK_PROVIDER);
 			
-			Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			Location location = locationManager.getLastKnownLocation(provider);
 			locationManager.requestLocationUpdates(provider,MIN_TIME_UPDATES , MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
 			
 			if(location != null){
@@ -71,7 +75,7 @@ public class LocatorTracker extends Service implements LocationListener{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public void onLocationChanged(Location loc) {
 		double latitude = loc.getLatitude();

@@ -33,6 +33,23 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+        
+		<service android:enabled="true"
+		     android:name="br.edu.ifpb.services.GPSTeste">	
+		     <intent-filter>
+			     <action android:name="SERVICE_3" />		
+			     <category android:name="android.intent.category.DEFAULT" />
+		     </intent-filter>
+		</service>
+		
+		<receiver
+	        android:enabled="true"
+	        android:name="br.edu.ifpb.services.LocationReceiver">
+	        <intent-filter >
+	             <action android:name="xxx.yyy.intent.action.LOCATION" />
+	        </intent-filter>
+    	</receiver>
+		
    		
         <activity
             android:name="br.edu.ifpb.view.MainActivity"
