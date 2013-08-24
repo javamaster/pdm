@@ -11,6 +11,10 @@ public class Ambiente {
 	private Location location;
 	private double raio;
 	private String descricao;
+	private int perfil;
+	public static final int SILENCIOSO = 1;
+	public static final int VIBRACAO = 2;
+	public static final int NORMAL = 0;
 	
 	public Ambiente() {}
 	
@@ -36,6 +40,15 @@ public class Ambiente {
 	public double getRaio() {
 		return raio;
 	}
+	
+	public int getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(int perfil) {
+		this.perfil = perfil;
+	}
+
 	public void setRaio(double raio) {
 		this.raio = raio;
 	}

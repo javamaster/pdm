@@ -1,4 +1,4 @@
-package br.edu.ifpb.services;
+package br.edu.ifpb.testes;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package br.edu.ifpb.services;
+package br.edu.ifpb.testes;
 
 import android.app.Application;
 import android.content.Context;

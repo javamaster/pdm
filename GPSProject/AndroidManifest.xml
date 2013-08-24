@@ -26,7 +26,7 @@
             </intent-filter>
         </service>
         
-		<service android:name="br.edu.ifpb.services.ContadorService" >
+		<service android:name="br.edu.ifpb.testes.ContadorService" >
             <intent-filter>
                 <action android:name="SERVICE_2" />
 
@@ -44,7 +44,7 @@
 		
 		<receiver
 	        android:enabled="true"
-	        android:name="br.edu.ifpb.services.LocationReceiver">
+	        android:name="br.edu.ifpb.testes.LocationReceiver">
 	        <intent-filter >
 	             <action android:name="xxx.yyy.intent.action.LOCATION" />
 	        </intent-filter>
