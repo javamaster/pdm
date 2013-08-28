@@ -1,11 +1,9 @@
 package br.edu.ifpb.view;
 
-import br.edu.ifpb.R;
-import br.edu.ifpb.R.layout;
-import br.edu.ifpb.R.menu;
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+import br.edu.ifpb.R;
 
 public class Main_Screen extends Activity {
 

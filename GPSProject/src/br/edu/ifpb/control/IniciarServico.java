@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import br.edu.ifpb.R;
+import br.edu.ifpb.view.AmbientesList;
 
 public class IniciarServico extends Activity {
 
@@ -37,11 +38,13 @@ public class IniciarServico extends Activity {
 			public void onClick(View v) {
 				//Iniciar o Serviço
 				
-				ComponentName cn = startService(GPSTesteIT);	
-				Log.d("IniciarServico", "O serviço fica executando em segundo plano");
-				if(cn != null){
-					txv.setText("O serviço fica executando em segundo plano");					
-				}
+//				ComponentName cn = startService(GPSTesteIT);	
+//				Log.d("IniciarServico", "O serviço fica executando em segundo plano");
+//				if(cn != null){
+//					txv.setText("O serviço fica executando em segundo plano");					
+//				}
+				Intent it = new Intent("Amb_conf");
+				startActivity(it);				
 			}
 			
 		});

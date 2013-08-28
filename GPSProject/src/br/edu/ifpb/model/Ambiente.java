@@ -69,7 +69,11 @@ public class Ambiente {
 		this.descricao = descricao;
 	}
 	
-	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Nome: "+nome+" Raio: "+raio+" Latitude: "+location.getLatitude();
+	}
 }
 
 

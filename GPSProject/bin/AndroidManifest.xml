@@ -17,52 +17,45 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
-   		<service android:name="br.edu.ifpb.services.GPSService">
+        <service android:name="br.edu.ifpb.services.GPSService" >
             <intent-filter>
                 <action android:name="SERVICE_1" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-        
-		<service android:name="br.edu.ifpb.testes.ContadorService" >
+        <service android:name="br.edu.ifpb.testes.ContadorService" >
             <intent-filter>
                 <action android:name="SERVICE_2" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-        
-		<service android:enabled="true"
-		     android:name="br.edu.ifpb.services.GPSTeste">	
-		     <intent-filter>
-			     <action android:name="SERVICE_3" />		
-			     <category android:name="android.intent.category.DEFAULT" />
-		     </intent-filter>
-		</service>
-		
-		<receiver
-	        android:enabled="true"
-	        android:name="br.edu.ifpb.testes.LocationReceiver">
-	        <intent-filter >
-	             <action android:name="xxx.yyy.intent.action.LOCATION" />
-	        </intent-filter>
-    	</receiver>
-		
-   		
+        <service
+            android:name="br.edu.ifpb.services.GPSTeste"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="SERVICE_3" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="br.edu.ifpb.testes.LocationReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="xxx.yyy.intent.action.LOCATION" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name="br.edu.ifpb.view.MainActivity"
             android:label="@string/app_name" >
-            
         </activity>
         <activity
             android:name="br.edu.ifpb.control.IniciarServico"
             android:label="@string/title_activity_iniciar_servico" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="br.edu.ifpb.view.Main_Screencreen"
@@ -71,7 +64,38 @@
         <activity
             android:name="br.edu.ifpb.view.Screen_ccadastro"
             android:label="@string/title_activity_screen_ccadastro" >
-            
+            <intent-filter>
+                <action android:name="Tela_cadastro" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.view.AmbientesList"
+            android:label="@string/title_ambiente_list" >
+            <intent-filter>
+                <action android:name="Amb_list" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.view.AmbienteConf"
+            android:label="@string/title_ambiente_conf" >
+            <intent-filter>
+                <action android:name="Amb_conf" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.view.Home"
+            android:label="@string/title_activity_home" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
