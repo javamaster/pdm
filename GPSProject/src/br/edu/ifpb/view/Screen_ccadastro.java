@@ -133,6 +133,7 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 		}
 		
 		Ambiente ambiente = new Ambiente();
+		
 		ambiente.setNome(campoNome.getText().toString());
 		ambiente.setRaio(raio);
 		ambiente.setData_persist(new Date());

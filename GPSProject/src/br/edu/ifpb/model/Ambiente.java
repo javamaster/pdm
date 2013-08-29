@@ -81,7 +81,7 @@ public class Ambiente {
 	}
 	
 	public Ambiente(long id,String nome, Date data_persist, Location location,
-			double raio, String descricao) {
+			double raio,  String descricao) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -93,7 +93,7 @@ public class Ambiente {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Nome: "+nome+" Raio: "+raio+" Latitude: "+location.getLatitude();
+		return "Nome: "+getNome()+" Raio: "+getRaio()+" Latitude: "+location.getLatitude()+" data: "+getData_persist();
 	}
 }
 

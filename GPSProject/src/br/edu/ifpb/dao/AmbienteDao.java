@@ -36,11 +36,11 @@ public class AmbienteDao {
 		 ContentValues values = new ContentValues();
 		 
 		 values.put(Banco.COLUMN_NOME, ambiente.getNome());
-		 values.put(Banco.COLUMN_LATITUDE, "");
-		 values.put(Banco.COLUMN_LONGITUDE, "");
+		 values.put(Banco.COLUMN_LATITUDE, ambiente.getLocation().getLatitude());
+		 values.put(Banco.COLUMN_LONGITUDE, ambiente.getLocation().getLongitude());
 		 values.put(Banco.COLUMN_DATE, ambiente.getData_persist().toString());
 		 
-		 values.put(Banco.COLUMN_RAIO, String.valueOf(ambiente.getRaio()));
+		 values.put(Banco.COLUMN_RAIO, ambiente.getRaio());
 		 values.put(Banco.COLUMN_DESCRICAO, ambiente.getDescricao());
 		 values.put(Banco.COLUMN_PERFIL, ambiente.getPerfil());
 		 
@@ -58,10 +58,11 @@ public class AmbienteDao {
 		 location.setLatitude(cursor.getDouble(2));
 		 location.setLongitude(cursor.getDouble(3));
 		 ambiente.setLocation(location);
-		 
 		 ambiente.setData_persist(new Date());
 		 ambiente.setRaio(cursor.getDouble(5));
-		 ambiente.setPerfil(cursor.getInt(6));
+		 
+		 ambiente.setDescricao(cursor.getString(6));
+		 ambiente.setPerfil(cursor.getInt(7));
 		 
 		 cursor.close();
 		 
@@ -92,8 +93,10 @@ public class AmbienteDao {
 		 location.setLatitude(cursor.getDouble(2));
 		 location.setLongitude(cursor.getDouble(3));
 		 ambiente.setLocation(location);
-		 
 		 ambiente.setData_persist(new Date());
+		 ambiente.setRaio(cursor.getDouble(5));
+		 ambiente.setDescricao(cursor.getString(6));
+		 ambiente.setPerfil(cursor.getInt(7));
 		 ambientes.add(ambiente);
 		 
 		 cursor.moveToNext();
@@ -104,5 +107,7 @@ public class AmbienteDao {
 	 return ambientes;
 	 
 	}
+	
+	
 	
 }

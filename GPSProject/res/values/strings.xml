@@ -43,5 +43,7 @@
     <string name="tbl_nome">Nome</string>
     <string name="tbl_raio">Raio</string>
     <string name="title_activity_app_testes">AppTestes</string>
+    <string name="lb_ambiente">Ambiente</string>
+    <string name="lb_settings">Settings</string>
 
 </resources>

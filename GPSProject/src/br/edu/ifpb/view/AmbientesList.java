@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import br.edu.ifpb.dao.AmbienteDao;
 import br.edu.ifpb.model.Ambiente;
 import br.edu.ifpb.util.AmbienteListAdapter;
 
@@ -27,12 +28,12 @@ public class AmbientesList extends ListActivity {
 	private static final int BUSCAR = 2;
 	
 	private List<Ambiente> ambientes;
+	private AmbienteDao dao = new AmbienteDao(this);
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
 		atualizarLista();
 	}
 	
@@ -60,10 +61,8 @@ public class AmbientesList extends ListActivity {
 	}
 	
 	private void atualizarLista(){
-		ambientes = new ArrayList<Ambiente>();
-		ambientes.add(new Ambiente(1,"Biblioteca", new Date(), new Location(""), 130, ""));
-		ambientes.add(new Ambiente(2,"Pátio", new Date(), new Location(""), 150, ""));
-		ambientes.add(new Ambiente(3,"Sala", new Date(), new Location(""), 100, ""));
+		dao.open();
+		ambientes = dao.getAll();
 		
 		ArrayAdapter<Ambiente> arrayAdapter = 
 				new ArrayAdapter<Ambiente>(this, android.R.layout.simple_list_item_1,ambientes);

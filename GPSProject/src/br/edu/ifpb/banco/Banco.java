@@ -22,10 +22,10 @@ public class Banco extends SQLiteOpenHelper{
 			+ TABLE_AMBIENTE + " ( " 
 			+ COLUMN_ID + " integer primary key autoincrement, "
 			+ COLUMN_NOME +" text not null, "
-			+ COLUMN_LATITUDE + " text not null, "
-			+ COLUMN_LONGITUDE +" text not null, "
+			+ COLUMN_LATITUDE + " double not null, "
+			+ COLUMN_LONGITUDE +" double not null, "
 			+ COLUMN_DATE + " text not null, " 
-			+ COLUMN_RAIO + " text not null, "
+			+ COLUMN_RAIO + " double not null, "
 			+ COLUMN_DESCRICAO + " text not null, " 
 			+ COLUMN_PERFIL + " integer not null);";
 	
@@ -39,7 +39,7 @@ public class Banco extends SQLiteOpenHelper{
 		db.execSQL(DATABASE_CREATE);
 		
 	}
-
+	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_AMBIENTE);

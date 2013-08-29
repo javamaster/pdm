@@ -28,8 +28,8 @@ public class AppTestes extends Activity {
 		loc.setLatitude(6.222555);
 		
 		Ambiente ambiente = new Ambiente();
-		ambiente.setNome("Sala");
-		ambiente.setRaio(150);
+		ambiente.setNome("Dan");
+		ambiente.setRaio(13.657);
 		ambiente.setLocation(loc);
 		ambiente.setDescricao("nfsçkdljf~ks");
 		ambiente.setPerfil(Ambiente.SILENCIOSO);
@@ -39,9 +39,10 @@ public class AppTestes extends Activity {
 		
 		List<Ambiente> ambs = dao.getAll();
 		
-		for(int i = 0;i<ambs.size();i++)
-		Log.d("Ambiente", ambs.get(i).toString());
-		
+		for(int i = 0;i<ambs.size();i++){
+			Log.d("Ambiente", ambs.get(i).toString());
+			System.out.println(ambs.get(i));
+		}
 		dao.close();
 	}
 

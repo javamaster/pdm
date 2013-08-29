@@ -48,4 +48,23 @@
         android:src="@drawable/clock" 
         />
 
+    <TextView
+        android:id="@+id/ambiente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/btnAmbiente"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:textColor="#FFFAFA"
+        android:text="@string/lb_ambiente" />
+
+    <TextView
+        android:id="@+id/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ambiente"
+        android:layout_toRightOf="@+id/textView1"
+        android:textColor="#FFFAFA"
+        android:text="@string/lb_settings" />
+
 </RelativeLayout>
