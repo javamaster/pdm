@@ -28,7 +28,8 @@
     <string name="title_ambiente_list">Ambientes</string>
     <string name="title_ambiente_conf">config</string>
     <string name="call">CallLocation</string>
-	<string name="desc">Description</string>
+    <string name="desc">Description</string>
+
     <string-array name="ringtone_modes">
         <item>Normal</item>
         <item>Silent</item>
@@ -41,5 +42,6 @@
     <string name="title_activity_home">Home</string>
     <string name="tbl_nome">Nome</string>
     <string name="tbl_raio">Raio</string>
+    <string name="title_activity_app_testes">AppTestes</string>
 
 </resources>

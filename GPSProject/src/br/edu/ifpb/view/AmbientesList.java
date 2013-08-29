@@ -1,0 +1,108 @@
+package br.edu.ifpb.view;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import android.R;
+import android.app.ListActivity;
+import android.content.Intent;
+import android.location.Location;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import br.edu.ifpb.model.Ambiente;
+import br.edu.ifpb.util.AmbienteListAdapter;
+
+public class AmbientesList extends ListActivity {
+	
+	private static final int INSERIR_EDITAR = 1;
+	private static final int BUSCAR = 2;
+	
+	private List<Ambiente> ambientes;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		
+		atualizarLista();
+	}
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		// TODO Auto-generated method stub
+		super.onListItemClick(l, v, position, id);
+		
+		
+		editarAmbiente(position);
+	}
+	
+	private void editarAmbiente(int position) {
+		
+		Ambiente a = ambientes.get(position);
+		
+		Intent it = new Intent("Tela_cadastro");
+		
+		it.putExtra("ID", a.getId());
+		
+		Log.d("Editar", "Editar "+a.getId());
+		
+		startActivity(it);
+		
+	}
+	
+	private void atualizarLista(){
+		ambientes = new ArrayList<Ambiente>();
+		ambientes.add(new Ambiente(1,"Biblioteca", new Date(), new Location(""), 130, ""));
+		ambientes.add(new Ambiente(2,"Pátio", new Date(), new Location(""), 150, ""));
+		ambientes.add(new Ambiente(3,"Sala", new Date(), new Location(""), 100, ""));
+		
+		ArrayAdapter<Ambiente> arrayAdapter = 
+				new ArrayAdapter<Ambiente>(this, android.R.layout.simple_list_item_1,ambientes);
+
+		setListAdapter(arrayAdapter);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		
+		super.onCreateOptionsMenu(menu);
+		
+		menu.add(0,INSERIR_EDITAR,0,"Inserir Novo");
+		menu.add(0,BUSCAR,0,"Buscar");
+		
+		return true;
+		
+	}
+	
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		
+		switch (item.getItemId()) {
+		
+		case INSERIR_EDITAR:
+			startActivityForResult(new Intent("Tela_cadastro"), INSERIR_EDITAR);
+			break;
+		case BUSCAR:
+			startActivityForResult(new Intent("Tela_cadastro"), BUSCAR);
+			break;
+		default:
+			break;
+		}
+		
+		return true;
+	
+	}
+	
+	
+
+}

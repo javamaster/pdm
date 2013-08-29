@@ -97,6 +97,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="br.edu.ifpb.AppTestes"
+            android:label="@string/title_activity_app_testes" >
+            
+            
+        </activity>
     </application>
 
 </manifest>

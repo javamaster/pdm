@@ -6,6 +6,7 @@ import android.location.Location;
 
 public class Ambiente {
 	
+	private long id;
 	private String nome;
 	private Date data_persist;
 	private Location location;
@@ -18,6 +19,16 @@ public class Ambiente {
 	
 	public Ambiente() {}
 	
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
 	public String getNome() {
 		return nome;
 	}
@@ -69,6 +80,16 @@ public class Ambiente {
 		this.descricao = descricao;
 	}
 	
+	public Ambiente(long id,String nome, Date data_persist, Location location,
+			double raio, String descricao) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.data_persist = data_persist;
+		this.location = location;
+		this.raio = raio;
+		this.descricao = descricao;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
