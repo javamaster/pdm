@@ -101,27 +101,6 @@
         android:ems="10"
         android:inputType="none" />
 
-    <Button
-        android:id="@+id/btCancel"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/spinner_ringtone"
-        android:layout_below="@+id/spinner_ringtone"
-        android:background="#BEBEBE"
-        android:text="@string/btCancel"
-        android:textColor="#FFFFFF" />
-
-    <Button
-        android:id="@+id/btSave"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btCancel"
-        android:layout_alignBottom="@+id/btCancel"
-        android:layout_alignLeft="@+id/textView5"
-        android:background="#BEBEBE"
-        android:text="@string/btSave"
-        android:textColor="#FFFFFF" />
-
     <Spinner
         android:id="@+id/spinner_ringtone"
         android:layout_width="100dp"
@@ -130,5 +109,35 @@
         android:layout_alignTop="@+id/textView5"
         android:layout_toRightOf="@+id/textView2"
         android:paddingBottom="10dp" />
+
+    <Button
+        android:id="@+id/btSave"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignTop="@+id/btCancel"
+        android:background="#BEBEBE"
+        android:text="@string/btSave"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btCancel"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner_ringtone"
+        android:layout_centerHorizontal="true"
+        android:background="#BEBEBE"
+        android:text="@string/btCancel"
+        android:textColor="#FFFFFF" />
+
+    <ImageButton
+        android:id="@+id/btRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignRight="@+id/spinner_ringtone"
+        android:layout_alignTop="@+id/btCancel"
+        android:src="@drawable/remove" 
+        android:contentDescription="@string/desc"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

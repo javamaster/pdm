@@ -1,11 +1,14 @@
 package br.edu.ifpb.view;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,28 +19,34 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 import br.edu.ifpb.R;
 import br.edu.ifpb.dao.AmbienteDao;
 import br.edu.ifpb.model.Ambiente;
 
-public class Screen_ccadastro extends Activity implements OnItemSelectedListener, OnClickListener{
+public class Screen_ccadastro extends Activity implements OnItemSelectedListener,LocationListener{
 
 	@SuppressWarnings("unused")
 	private Ambiente ambiente;
 	private String ringtone_mode_selected;
 	private Button btSave, btCancel;
+	private ImageButton btRemove;
 	private Long id;
-	private List<Ambiente> ambientes;
+	
 	private AmbienteDao dao;
-	private EditText campoNome, campoRaio, campoLatitude, campoLongitude, campoPerfil;
+	private EditText campoNome, campoRaio, campoLatitude,
+	campoLongitude, campoPerfil;
+	private LocationManager manager = null;
+	private Location location;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_screen_ccadastro);
+		
 		
 		campoNome = (EditText) findViewById(R.id.editTextNome);
 		campoRaio = (EditText) findViewById(R.id.editTextRaio);
@@ -46,9 +55,13 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 		
 		 btSave = (Button) findViewById(R.id.btSave);
 		 btCancel = (Button) findViewById(R.id.btCancel);
+		 btRemove = (ImageButton) findViewById(R.id.btRemove);
 		 
 		 dao = new AmbienteDao(this);
 		 dao.open();
+		 
+		 //Configura dados do gps na tela de cadastro
+		 configuraGps();
 		
 		id = null;
 		
@@ -99,7 +112,18 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 				
 			}
 		});
-		
+
+		btRemove.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//Remover o Ambiente selecionado
+				remove(id);
+				
+				//Encerrar a activity
+				finish();
+			}
+		});
 		Spinner spinner = (Spinner) findViewById(R.id.spinner_ringtone);
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ringtone_modes, android.R.layout.simple_spinner_item);
@@ -110,9 +134,42 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 		
 		spinner.setOnItemSelectedListener(this);
 		
+		habilitaBotaoRemover();
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 		
+		habilitaBotaoRemover();
+		
+		configuraGps();
 	}
 
+	private void configuraGps(){
+		
+		manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		
+		Criteria criteria = new Criteria();
+		
+		String provider = manager.getBestProvider(criteria, false);
+		
+		location = manager.getLastKnownLocation(provider);
+		
+		LocationListener myListener = new MyLocationListner();
+		
+		manager.requestLocationUpdates(provider,0 , 0, this);
+		
+		if(location != null){
+			Log.i("Localizacao", "Latitude: "+location.getLatitude()+" \n Longitude: "+location.getLongitude());
+			onLocationChanged(location);
+		}
+		else{
+			Log.i("Localizacao", "Localização não definida!!");
+			campoLatitude.setText("0.0");
+			campoLongitude.setText("0.0");
+		}
+	}
 	
 	private void atualizaTelaCadastro(Ambiente a) {
 		//Atualiza os campos
@@ -125,22 +182,30 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 	protected void salvar() {
 	
 		double raio = 0;
+		Location loc = new Location("");
 				
 		try {
 			raio = Double.valueOf(campoRaio.getText().toString());
+			
+			loc.setLatitude(Double.valueOf(campoLatitude.getText().toString()));
+			loc.setLongitude(Double.valueOf(campoLongitude.getText().toString()));
 		} catch (NumberFormatException e) {
-			//Tratar exception aqui
+			Toast.makeText(this, "Raio: "+e.getMessage(), Toast.LENGTH_SHORT);
+			return;
 		}
 		
 		Ambiente ambiente = new Ambiente();
+		
+		if(id != null){
+			//Eh uma atualização
+			ambiente.setId(id);
+		}
 		
 		ambiente.setNome(campoNome.getText().toString());
 		ambiente.setRaio(raio);
 		ambiente.setData_persist(new Date());
 		
-		Location loc =new Location("");
-		loc.setLatitude(Double.valueOf(campoLatitude.getText().toString()));
-		loc.setLatitude(Double.valueOf(campoLatitude.getText().toString()));
+		
 		
 		ambiente.setLocation(loc);
 				
@@ -155,29 +220,39 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 		
 		ambiente.setDescricao("kdkljglkdf");
 		
-		//Persiste o ambiente
-		dao.create(ambiente);
+		//Salvar/Atualizar o ambiente no banco
+		salvarAmbiente(ambiente);		
 		
 		//Exibe uma mensagem
 		Toast.makeText(this, "Ambiente Salvo!!", Toast.LENGTH_SHORT).show();
 		
+		liberarRecursos();
 		finish();
 	}
-	
 
-	private List<Ambiente> repositorio(){
-		//Aqui estamos apenas simulando uma busca no repositorio
-		ambientes = new ArrayList<Ambiente>();
-		ambientes.add(new Ambiente(1,"Biblioteca", new Date(), new Location(""), 130, ""));
-		ambientes.add(new Ambiente(2,"Pátio", new Date(), new Location(""), 150, ""));
-		ambientes.add(new Ambiente(3,"Sala", new Date(), new Location(""), 100, ""));
-
-		return ambientes;
+	protected void remove(long id){
+		dao.remove(id);
 	}
 
+	private void salvarAmbiente(Ambiente ambiente) {		
+		dao.salvar(ambiente);		
+		liberarRecursos();
+	}
+	
+	public void habilitaBotaoRemover(){
+		if(id != null){
+			btRemove.setVisibility(Button.VISIBLE);
+		}
+		else{
+			btRemove.setVisibility(Button.INVISIBLE);
+		}
+	}
+
+
+	
 	private Ambiente buscarAmbiente(Long id) {
 		//Aqui eh necessario realizar uma busca pelo id do ambiente 
-		return repositorio().get(id.intValue());
+		return dao.buscarAmbiente(id);
 	}
 
 	protected void exibeAmbiente(Ambiente ambiente2) {
@@ -207,17 +282,76 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
-	public void onClick(View v) {
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		dao.close();
+	}
+	
+	public void liberarRecursos(){
+		dao.close();
+	}
+	
+	public void updateLocation(Location location) {
+		double latitude = location.getLatitude();
+		double longitude = location.getLongitude();
 		
-		Button button = (Button)v;
-		if(button.getId() == 0x7f09000f){
+		campoLatitude.setText(String.valueOf(latitude));
+		campoLongitude.setText(String.valueOf(longitude));
+		
+	}
+		
+	class MyLocationListner implements LocationListener{
+
+		@Override
+		public void onLocationChanged(Location location) {
+			updateLocation(location);						
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub
 			
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
 			
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
 			
 		}
 		
 		
 	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		updateLocation(location);		
+	}
+	
+	@Override
+	public void onProviderDisabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onProviderEnabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 }

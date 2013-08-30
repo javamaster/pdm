@@ -1,16 +1,10 @@
 package br.edu.ifpb.view;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import android.R;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,12 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import br.edu.ifpb.dao.AmbienteDao;
 import br.edu.ifpb.model.Ambiente;
-import br.edu.ifpb.util.AmbienteListAdapter;
 
 public class AmbientesList extends ListActivity {
 	
 	private static final int INSERIR_EDITAR = 1;
 	private static final int BUSCAR = 2;
+	private static Context contexto;
 	
 	private List<Ambiente> ambientes;
 	private AmbienteDao dao = new AmbienteDao(this);
@@ -46,6 +40,12 @@ public class AmbientesList extends ListActivity {
 		editarAmbiente(position);
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		atualizarLista();
+	}
 	private void editarAmbiente(int position) {
 		
 		Ambiente a = ambientes.get(position);
@@ -100,6 +100,13 @@ public class AmbientesList extends ListActivity {
 		
 		return true;
 	
+	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		dao.close();
 	}
 	
 	

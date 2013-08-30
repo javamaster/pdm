@@ -15,6 +15,9 @@ public class Banco extends SQLiteOpenHelper{
 	public static final String COLUMN_DESCRICAO = "descricao";
 	public static final String COLUMN_PERFIL = "perfil";
 	
+	public static final String[] colunas = new String[]{COLUMN_ID,COLUMN_NOME,COLUMN_LATITUDE,COLUMN_LONGITUDE,
+		COLUMN_DATE,COLUMN_RAIO,COLUMN_DESCRICAO,COLUMN_PERFIL};
+	
 	private static final String DATABASE_NAME = "ambiente.db";
 	private static final int DATABASE_VERSION = 1;
 	

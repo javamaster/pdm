@@ -9,7 +9,7 @@ public class MyApplication extends Application {
 
 	@Override
 	public void onCreate() {
-		MyApplication.context = getApplicationContext();
+		MyApplication.context = getBaseContext();
 	}
 	
 	public static Context getAppContext(){

@@ -2,7 +2,6 @@ package br.edu.ifpb.services;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import android.app.Service;
@@ -18,7 +17,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
+import br.edu.ifpb.dao.AmbienteDao;
 import br.edu.ifpb.model.Ambiente;
+import br.edu.ifpb.testes.MyApplication;
 import br.edu.ifpb.util.GeoCoordinate;
 import br.edu.ifpb.util.GeoUtils;
 
@@ -32,9 +33,17 @@ public class GPSTeste extends Service{
 	public static final String AMBIENTE = "AMBIENTE"; 
 	public static final String LOCALIZACAO = "LOCALIZACAO";
 	private static boolean ambienteSelected= false;
-	private static List<Ambiente> ambientes;
+	
 	private static Ambiente ambienteAtual;
-
+	
+	private AmbienteDao dao;
+	private List<Ambiente> ambientes = null;
+	
+	@Override
+	public void onCreate() {
+		// TODO Auto-generated method stub
+		super.onCreate();
+	}
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
@@ -50,9 +59,13 @@ public class GPSTeste extends Service{
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		super.onStartCommand(intent, flags, startId);
-		ambientes = recuperaAmbientes();
+		this.dao = new AmbienteDao(MyApplication.getAppContext());
+		ambientes = dao.getAll();
 		addLocationListner();
-		return START_STICKY;
+		Log.i("Ambientes", ambientes.toString());
+		
+	 return START_STICKY;
+	 
 	}
 	
 	public void addLocationListner(){
@@ -137,7 +150,7 @@ public class GPSTeste extends Service{
 	}
 	
 	
-	public static void updateLocation(Location location){
+	public void updateLocation(Location location){
 	
 		
 		double latitude, longitude;
@@ -181,6 +194,7 @@ public class GPSTeste extends Service{
 	    if(GPSTeste.ambienteSelected){
 			
 	    	Location loc = ambienteAtual.getLocation();
+	    	
 			GeoCoordinate coordinateAnterior = new GeoCoordinate(loc.getLatitude(), loc.getLongitude());
 			double distance2 = GeoUtils.geoDistanceInKm(coordinate, coordinateAnterior)*1000;
 			
@@ -195,36 +209,46 @@ public class GPSTeste extends Service{
 			updateAmbiente(coordinate);
 		}
 	}
-	    
-	    
-	    
-	    
-	    
-	public static void updateAmbiente(GeoCoordinate geo){
+	 
+	public void alterarConfiguracoesChamada(Ambiente a){
 		
-		for (int i = 0; i < ambientes.size(); i++) {
-			Ambiente ambiente = ambientes.get(i);
-			Location location = ambiente.getLocation();
-			
-			GeoCoordinate geo2 = new GeoCoordinate(location.getLatitude(), location.getLongitude());
-			
-			double distance = (GeoUtils.geoDistanceInKm(geo, geo2))*1000;
-			
-			Log.d(LOCALIZACAO, "Distancia entre a posicao atual do usuario e o ambiente "+ambiente.getNome()+" eh "+distance);
-			
-			if(distance<=ambiente.getRaio()){
+	} 
+	    
+	   
+	    
+	    
+	public void updateAmbiente(GeoCoordinate geo){
+		
+		if(ambientes != null){
+			for (int i = 0; i < ambientes.size(); i++) {
 				
-				//altera as conf. de chamadas para o ambiente
-				ambienteAtual = ambiente;
-				ambienteSelected = true;
-				Log.d(AMBIENTE, "configuração definida para o ambiente "+ambiente.getNome());
-				break;
-			}
-			
+				Ambiente ambiente = ambientes.get(i);
+				Location location = ambiente.getLocation();
+				
+				GeoCoordinate geo2 = new GeoCoordinate(location.getLatitude(), location.getLongitude());
+				
+				double distance = (GeoUtils.geoDistanceInKm(geo, geo2))*1000;
+				
+				Log.d(LOCALIZACAO, "Distancia entre a posicao atual do usuario e o ambiente "+ambiente.getNome()+" eh "+distance);
+				
+				if(distance<=ambiente.getRaio()){
+					
+					//altera as conf. de chamadas para o ambiente
+					ambienteAtual = ambiente;
+					ambienteSelected = true;
+					Log.d(AMBIENTE, "configuração definida para o ambiente "+ambiente.getNome());
+					break;
+				}
+				
 		}
 		
 		if(!ambienteSelected){
 			Log.d(AMBIENTE, "Nenhum ambiente referenciado");
+		}
+	
+		}
+		else{
+			Log.d(AMBIENTE, "Nenhum ambiente cadastrado");
 		}
 	
 	}

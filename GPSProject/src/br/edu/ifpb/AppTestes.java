@@ -35,14 +35,17 @@ public class AppTestes extends Activity {
 		ambiente.setPerfil(Ambiente.SILENCIOSO);
 		ambiente.setData_persist(new Date());
 		
-		dao.create(ambiente);
+//		dao.create(ambiente);
+//		
+//		List<Ambiente> ambs = dao.getAll();
+//		
+//		for(int i = 0;i<ambs.size();i++){
+//			Log.d("Ambiente", ambs.get(i).toString());
+//			System.out.println(ambs.get(i));
+//		}
 		
-		List<Ambiente> ambs = dao.getAll();
 		
-		for(int i = 0;i<ambs.size();i++){
-			Log.d("Ambiente", ambs.get(i).toString());
-			System.out.println(ambs.get(i));
-		}
+		Log.d("Ambiente","Ambiente pelo id: "+ dao.buscarAmbiente(2).toString());
 		dao.close();
 	}
 

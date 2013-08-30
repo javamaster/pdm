@@ -73,6 +73,7 @@ public class MainActivity extends Activity implements LocationListener {
 		} else {
 			latitudetxt.setText(R.string.location_not_available);
 			longitudetxt.setText(R.string.location_not_available);
+			Log.d("MainActivity", "Nenhuma localização encontrada!");
 		}
 	}
 
@@ -104,6 +105,8 @@ public class MainActivity extends Activity implements LocationListener {
 		latitudetxt.setText(getString(R.string.point, lat));
 		longitudetxt.setText(getString(R.string.point, lon));
 
+		Log.i("Latitude", String.valueOf(lat));
+		Log.i("Longitude", String.valueOf(lon));
 	}
 
 	@Override

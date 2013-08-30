@@ -39,7 +39,7 @@ public class Home extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				//obtem referencia para a proxima tela 
-				Intent conf = new Intent("Amb_conf");
+				Intent conf = new Intent("Amb_viewer");
 				
 				//inicia a proxima tela
 				startActivity(conf);

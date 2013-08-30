@@ -45,5 +45,7 @@
     <string name="title_activity_app_testes">AppTestes</string>
     <string name="lb_ambiente">Ambiente</string>
     <string name="lb_settings">Settings</string>
+    <string name="bt_remove">Remove</string>
+    <string name="title_activity_settings_viewer">SettingsViewer</string>
 
 </resources>
