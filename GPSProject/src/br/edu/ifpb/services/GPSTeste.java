@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.R.bool;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -33,7 +34,13 @@ public class GPSTeste extends Service{
 	public static final String AMBIENTE = "AMBIENTE"; 
 	public static final String LOCALIZACAO = "LOCALIZACAO";
 	private static boolean ambienteSelected= false;
+	boolean isGPSEnabled = false;
+	boolean isNetworkEnabled = false;
+	boolean canGetLocation = false;
 	
+	// Distancia minima, em metros, para atualizar 
+	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
+	private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
 	private static Ambiente ambienteAtual;
 	
 	private AmbienteDao dao;
@@ -60,7 +67,7 @@ public class GPSTeste extends Service{
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		super.onStartCommand(intent, flags, startId);
 		this.dao = new AmbienteDao(MyApplication.getAppContext());
-		ambientes = dao.getAll();
+		ambientes = recuperaAmbientes();
 		addLocationListner();
 		Log.i("Ambientes", ambientes.toString());
 		
@@ -93,12 +100,13 @@ public class GPSTeste extends Service{
 					
 					
 					if(location != null){
-						Log.d(PROVIDER, "localização obtida:\n latitude "+location.getLatitude());
+						Log.d(PROVIDER, "localização obtida:\n latitude "+location.getLatitude()+" Longitude: "+location.getLongitude());
+						updateLocation(location);
 					}
 					else{
 						Log.d(PROVIDER, "localização não foi obtida");						
 					}
-					locationManager.requestLocationUpdates(provider,0 , 0, listner);
+					locationManager.requestLocationUpdates(provider,0 , 0,listner);
 					
 					Looper.loop();
 					
@@ -119,14 +127,14 @@ public class GPSTeste extends Service{
 		Ambiente ambiente1 = new Ambiente();
 		
 		Location location = new Location("gps");
-		location.setLatitude(-6.844364);
-		location.setLongitude(-38.349055);
+		location.setLatitude(-6.4035924);
+		location.setLongitude(-37.9069351);
 		
 		ambiente1.setLocation(location);
 		ambiente1.setNome("Biblioteca");
 		ambiente1.setDescricao("Biblioteca do IFPB");
-		ambiente1.setRaio(100.0);
-		ambiente1.setRaio(Ambiente.SILENCIOSO);
+		ambiente1.setRaio(2500.0);
+		ambiente1.setPerfil(Ambiente.VIBRACAO);
 		ambiente1.setData_persist(new Date());
 		
 		
@@ -155,7 +163,7 @@ public class GPSTeste extends Service{
 		
 		double latitude, longitude;
 		
-		
+
 		latitude = location.getLatitude();
 		longitude = location.getLongitude();
 		
@@ -186,8 +194,8 @@ public class GPSTeste extends Service{
 //			Log.d("Distancia maior", "O usuario está fora de um ambiente ");
 //		}
 //		
-		Log.d("Localizacao", String.valueOf(latitude));
-	    Log.d("Localizacao", String.valueOf(longitude));
+		Log.d("Latitude do Emulador ", String.valueOf(latitude));
+	    Log.d("Longitude do Emulador ", String.valueOf(longitude));
 	    
 	//----------------------------------------------------------------------------------------
 	    
@@ -205,16 +213,39 @@ public class GPSTeste extends Service{
 				ambienteSelected = false;
 				updateAmbiente(coordinate);
 			}
+			else{
+				Log.d(AMBIENTE, "Usuario continua dentro do ambiente "+ambienteAtual.getNome());
+			}
 		}else{
 			updateAmbiente(coordinate);
 		}
 	}
 	 
-	public void alterarConfiguracoesChamada(Ambiente a){
+	public int alterarConfiguracoesChamada(int perfil){
 		
+		int ringer = 0;
+		
+		switch (perfil) {
+			case Ambiente.NORMAL:
+				audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+				ringer = Ambiente.NORMAL;
+				break;
+			case Ambiente.SILENCIOSO:
+				audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+				ringer = Ambiente.SILENCIOSO;
+				break;
+			case Ambiente.VIBRACAO:
+				audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+				ringer = Ambiente.VIBRACAO;
+				break;
+			}
+		return ringer;
 	} 
 	    
 	   
+	public double calculateDistanceInMeters(GeoCoordinate geo, GeoCoordinate geo2 ){
+		return (GeoUtils.geoDistanceInKm(geo, geo2))*1000;
+	}
 	    
 	    
 	public void updateAmbiente(GeoCoordinate geo){
@@ -224,16 +255,21 @@ public class GPSTeste extends Service{
 				
 				Ambiente ambiente = ambientes.get(i);
 				Location location = ambiente.getLocation();
+				double raio = ambiente.getRaio();
 				
+				//Transforma os dados obtidos em GeoCoordinate
 				GeoCoordinate geo2 = new GeoCoordinate(location.getLatitude(), location.getLongitude());
 				
-				double distance = (GeoUtils.geoDistanceInKm(geo, geo2))*1000;
+				double distance = calculateDistanceInMeters(geo, geo2);
 				
-				Log.d(LOCALIZACAO, "Distancia entre a posicao atual do usuario e o ambiente "+ambiente.getNome()+" eh "+distance);
+				Log.i(LOCALIZACAO, "Distancia entre a posicao atual do usuario e o ambiente "+ambiente.getNome()+" eh "+distance);
 				
-				if(distance<=ambiente.getRaio()){
+				//O usuario está dentro do ambiente
+				if(distance <= raio){
 					
-					//altera as conf. de chamadas para o ambiente
+					//altera as conf. de chamadas para o ambiente					
+					int ringer = alterarConfiguracoesChamada(ambiente.getPerfil());
+					Log.d(AMBIENTE, "configuração definida para o perfil "+Ambiente.getRinger(ringer));
 					ambienteAtual = ambiente;
 					ambienteSelected = true;
 					Log.d(AMBIENTE, "configuração definida para o ambiente "+ambiente.getNome());

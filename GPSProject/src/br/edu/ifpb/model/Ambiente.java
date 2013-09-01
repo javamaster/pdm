@@ -28,6 +28,22 @@ public class Ambiente {
 		this.id = id;
 	}
 
+	public static String getRinger(int ringer) {
+		String descricao = "";
+		switch (ringer) {
+		case 0:
+			descricao = "NORMAL";
+			break;
+		case 1:
+			descricao = "SILENCIOSO";
+			break;
+		case 2:
+			descricao = "VIBRACAO";
+			break;
+		}
+		
+		return descricao;
+	}
 
 	public String getNome() {
 		return nome;
