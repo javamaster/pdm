@@ -31,8 +31,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-        <service
-            android:name="br.edu.ifpb.services.GPSTeste" >
+        <service android:name="br.edu.ifpb.services.GPSTeste" >
             <intent-filter>
                 <action android:name="SERVICE_3" />
 
@@ -55,12 +54,6 @@
         <activity
             android:name="br.edu.ifpb.control.IniciarServico"
             android:label="@string/title_activity_iniciar_servico" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            
         </activity>
         <activity
             android:name="br.edu.ifpb.view.Main_Screencreen"
@@ -84,7 +77,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="br.edu.ifpb.view.AmbienteConf"
             android:label="@string/title_ambiente_conf" >
@@ -94,10 +86,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
         <activity
             android:name="br.edu.ifpb.view.Home"
             android:label="@string/title_activity_home" >
-                    </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
         <activity
             android:name="br.edu.ifpb.AppTestes"
             android:label="@string/title_activity_app_testes" >
@@ -107,6 +106,15 @@
             android:label="@string/title_activity_settings_viewer" >
             <intent-filter>
                 <action android:name="Amb_viewer" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="br.edu.ifpb.view.ConfigsService"
+            android:label="@string/title_activity_configs_service" >
+            <intent-filter>
+                <action android:name="configServiceIT" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

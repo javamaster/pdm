@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent" android:layout_height="wrap_content">
     
-    <TextView android:id="@+id/nome" 
+    <TextView
+        android:id="@+id/nome"
         android:layout_width="160sp"
         android:layout_height="wrap_content"
-        android:text="@string/tbl_nome"
-    />
+        android:editable="false"
+        android:text="@string/tbl_nome" />
         
     <TextView android:id="@+id/raio" 
         android:layout_width="160sp"

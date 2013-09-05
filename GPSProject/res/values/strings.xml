@@ -47,5 +47,8 @@
     <string name="lb_settings">Settings</string>
     <string name="bt_remove">Remove</string>
     <string name="title_activity_settings_viewer">SettingsViewer</string>
+    <string name="iniciar_service">Servico</string>
+    <string name="service_box">servico</string>
+    <string name="title_activity_configs_service">ConfigsService</string>
 
 </resources>

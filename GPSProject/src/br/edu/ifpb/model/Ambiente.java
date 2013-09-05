@@ -109,7 +109,7 @@ public class Ambiente {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Nome: "+getNome()+" Raio: "+getRaio()+" Latitude: "+location.getLatitude()+" data: "+getData_persist();
+		return "Nome: "+getNome()+" Raio: "+getRaio();
 	}
 }
 

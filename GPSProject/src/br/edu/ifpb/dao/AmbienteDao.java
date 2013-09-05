@@ -77,22 +77,22 @@ public class AmbienteDao {
 		 
 		 while (!cursor.isAfterLast()) {
 			 
-		 Ambiente ambiente = new Ambiente();
-		 
-		 ambiente.setId(cursor.getInt(0));
-		 ambiente.setNome(cursor.getString(1));
-		 
-		 Location location = new Location("");
-		 location.setLatitude(cursor.getDouble(2));
-		 location.setLongitude(cursor.getDouble(3));
-		 ambiente.setLocation(location);
-		 ambiente.setData_persist(new Date());
-		 ambiente.setRaio(cursor.getDouble(5));
-		 ambiente.setDescricao(cursor.getString(6));
-		 ambiente.setPerfil(cursor.getInt(7));
-		 ambientes.add(ambiente);
-		 
-		 cursor.moveToNext();
+			 Ambiente ambiente = new Ambiente();
+			 
+			 ambiente.setId(cursor.getInt(0));
+			 ambiente.setNome(cursor.getString(1));
+			 
+			 Location location = new Location("");
+			 location.setLatitude(cursor.getDouble(2));
+			 location.setLongitude(cursor.getDouble(3));
+			 ambiente.setLocation(location);
+			 ambiente.setData_persist(new Date());
+			 ambiente.setRaio(cursor.getDouble(5));
+			 ambiente.setDescricao(cursor.getString(6));
+			 ambiente.setPerfil(cursor.getInt(7));
+			 ambientes.add(ambiente);
+			 
+			 cursor.moveToNext();
 		 }
 		 
 		cursor.close();

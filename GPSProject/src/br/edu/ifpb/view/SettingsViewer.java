@@ -1,13 +1,20 @@
 package br.edu.ifpb.view;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Switch;
 import br.edu.ifpb.R;
 
 public class SettingsViewer extends ListActivity {
+	
+	private static final int INICIAR_SERVICO = 0;
+	private static final int PARAMETROS = 1;
 
 	
 	private String[] options = new String[]{"Ativar Serviço", "Parametros"};
@@ -35,10 +42,39 @@ public class SettingsViewer extends ListActivity {
 	
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		// TODO Auto-generated method stub
-		return super.onMenuItemSelected(featureId, item);
+		
+		switch (item.getItemId()) {				
+				case 1:					
+					startActivity(new Intent("configServiceIT"));
+					break;
+				case 2:
+					startActivityForResult(new Intent("configServiceIT"), 2);
+					break;
+				default:
+					break;
+				}
+				
+				return true;
+	
 	}
 
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		// TODO Auto-generated method stub
+		super.onListItemClick(l, v, position, id);
+		
+		switch (position) {
+			case INICIAR_SERVICO:
+				startActivity(new Intent("configServiceIT"));
+				break;
+			case PARAMETROS:
+				startActivity(new Intent("configServiceIT"));
+				break;
+
+			default:
+				break;
+		}
+	}
 
 	
 }

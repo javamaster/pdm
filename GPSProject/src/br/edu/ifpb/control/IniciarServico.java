@@ -52,8 +52,9 @@ public class IniciarServico extends Activity {
 			@Override
 			public void onClick(View v) {
 				//Parar o Serviço;
-				stopService(it);
+				stopService(GPSTesteIT);
 				Log.d("Parar Serviço", "Parando o serviço...");
+				txv.setText("Service stopped!!");
 			}
 		});
 		

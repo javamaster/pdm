@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.R.bool;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
@@ -66,13 +68,41 @@ public class GPSTeste extends Service{
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		super.onStartCommand(intent, flags, startId);
-		this.dao = new AmbienteDao(MyApplication.getAppContext());
-		ambientes = recuperaAmbientes();
+		this.dao = new AmbienteDao(getApplicationContext());
+		Log.d("Context", String.valueOf(getApplicationContext()));
+		ambientes = getListAmbientes();
+		printAmbientes();
 		addLocationListner();
-		Log.i("Ambientes", ambientes.toString());
 		
 	 return START_STICKY;
 	 
+	}
+	
+	public void  printAmbientes() {
+		if(ambientes!=null){
+			for (int i = 0; i < ambientes.size(); i++) {
+				Log.i("Ambiente", ambientes.get(i).toString());
+			}
+		}else{
+			Log.e("Ambiente", "Nenhum Ambiente retornado");
+		}
+	}
+	
+	public List<Ambiente>  getListAmbientes() {
+		try {
+			
+			if(dao != null){
+				return dao.getAll();
+			}
+			else{
+				Log.e("Error", "Dao nao foi instanciado");
+			}
+			
+		} catch (Exception e) {
+			Log.e("Error", "Não recupera a lista de ambientes");
+			dao.close();
+		}
+		return null;
 	}
 	
 	public void addLocationListner(){
@@ -91,23 +121,27 @@ public class GPSTeste extends Service{
 					
 					Criteria c = new Criteria();					
 					String provider = locationManager.getBestProvider(c, true);
-					
-					Log.d(PROVIDER, "MELHOR PROVEDOR SELECIONADO: "+provider);
-					
 					listner = new MyLocationListner();
 					
-					Location location = locationManager.getLastKnownLocation(provider);
-					
-					
-					if(location != null){
-						Log.d(PROVIDER, "localização obtida:\n latitude "+location.getLatitude()+" Longitude: "+location.getLongitude());
-						updateLocation(location);
+					if(provider!=null){
+						
+						Log.d(PROVIDER, "MELHOR PROVEDOR SELECIONADO: "+provider);
+						
+						
+						locationManager.requestLocationUpdates(provider,0 , 0,listner);
+						
+						Location location = locationManager.getLastKnownLocation(provider);
+						
+						
+						if(location != null){
+							Log.d(PROVIDER, "localização obtida:\n latitude "+location.getLatitude()+" Longitude: "+location.getLongitude());
+							updateLocation(location);
+						}
+						else{
+							Log.d(PROVIDER, "localização não foi obtida");						
+						}
+						
 					}
-					else{
-						Log.d(PROVIDER, "localização não foi obtida");						
-					}
-					locationManager.requestLocationUpdates(provider,0 , 0,listner);
-					
 					Looper.loop();
 					
 				} catch (Exception e) {
@@ -147,7 +181,7 @@ public class GPSTeste extends Service{
 		ambiente2.setLocation(location2);
 		ambiente2.setNome("Pátio");
 		ambiente2.setPerfil(Ambiente.VIBRACAO);
-		ambiente2.setDescricao("Pátio do IFPB");
+		ambiente2.setDescricao("Pátio do IFPB");	
 		ambiente2.setRaio(120);
 		ambiente2.setData_persist(new Date());
 		
@@ -167,33 +201,8 @@ public class GPSTeste extends Service{
 		latitude = location.getLatitude();
 		longitude = location.getLongitude();
 		
-//		String lat = Location.convert(location.getLatitude(),Location.FORMAT_DEGREES);
-//		String Lon = Location.convert(location.getLongitude(),Location.FORMAT_DEGREES);
-		
-		//Encapsula o ponto de localização atual
 		GeoCoordinate coordinate = new GeoCoordinate(latitude, longitude);
 		
-//		//obtem os dados da base
-//		Ambiente ambiente = ambientes.get(0);
-//		
-//		//Cria mais um coordinate para os dados provenientes do banco
-//		GeoCoordinate coordinate2 = new GeoCoordinate(ambiente.getLocation().getLatitude()
-//				, ambiente.getLocation().getLongitude());
-//		
-//		GeoUtils utils = new GeoUtils();
-//		
-//		@SuppressWarnings("static-access")
-//		double d = (utils.geoDistanceInKm(coordinate, coordinate2))*1000;
-//		Log.d("Distancia para a biblioteca ", String.valueOf(d));
-		
-//		if(d<ambiente.getRaio()){
-//			Log.d("Distancia menor", "O usuario está dentro do ambiente "+ambiente.getNome());
-//			GPSTeste.ambienteSelected = true;
-//		}
-//		else{
-//			Log.d("Distancia maior", "O usuario está fora de um ambiente ");
-//		}
-//		
 		Log.d("Latitude do Emulador ", String.valueOf(latitude));
 	    Log.d("Longitude do Emulador ", String.valueOf(longitude));
 	    
@@ -299,20 +308,42 @@ public class GPSTeste extends Service{
 
 		@Override
 		public void onProviderDisabled(String provider) {
-			// TODO Auto-generated method stub
 			
+//			AlertDialog.Builder builder = new AlertDialog.Builder(GPSTeste.this);
+//			builder.setMessage("Your GPS is disabled! Would you like to enable it?").setCancelable(false).
+//			setPositiveButton("GPS enabled", new DialogInterface.OnClickListener() {
+//				
+//				@Override
+//				public void onClick(DialogInterface dialogInterface, int arg) {
+//					
+//					Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS);
+//					startActivity(gpsOptionsIntent);
+//					
+//				}
+//			});
+//			
+//			builder.setNegativeButton("Do nothing", new DialogInterface.OnClickListener() {
+//				
+//				@Override
+//				public void onClick(DialogInterface dialog, int arg1) {
+//					
+//					dialog.cancel();
+//					
+//				}
+//			});
+//			
+//			AlertDialog alert = builder.create();
+//			alert.show();
 		}
 
 		@Override
 		public void onProviderEnabled(String provider) {
 			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
-			
+			// TODO Auto-generated method stub			
 		}
 		
 		

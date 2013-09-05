@@ -38,7 +38,7 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 	private AmbienteDao dao;
 	private EditText campoNome, campoRaio, campoLatitude,
 	campoLongitude, campoPerfil;
-	private LocationManager manager = null;
+	private LocationManager manager;
 	private Location location;
 	
 	@Override
@@ -60,8 +60,6 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 		 dao = new AmbienteDao(this);
 		 dao.open();
 		 
-		 //Configura dados do gps na tela de cadastro
-		 configuraGps();
 		
 		id = null;
 		
@@ -134,8 +132,14 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 		
 		spinner.setOnItemSelectedListener(this);
 		
-		habilitaBotaoRemover();
+		habilitaBotaoRemover();		
+
+		//Configura dados do gps na tela de cadastro
+		configuraGps();
+				
 	}
+	
+	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -204,7 +208,6 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 		ambiente.setNome(campoNome.getText().toString());
 		ambiente.setRaio(raio);
 		ambiente.setData_persist(new Date());
-		
 		
 		
 		ambiente.setLocation(loc);
@@ -276,7 +279,7 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 		toast.show();
 		
 	}
-
+	
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// TODO Auto-generated method stub
@@ -295,6 +298,7 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 	}
 	
 	public void updateLocation(Location location) {
+		
 		double latitude = location.getLatitude();
 		double longitude = location.getLongitude();
 		
