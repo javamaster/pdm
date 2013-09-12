@@ -15,7 +15,7 @@ import android.widget.ListView;
 import br.edu.ifpb.dao.AmbienteDao;
 import br.edu.ifpb.model.Ambiente;
 
-public class AmbientesList extends ListActivity {
+public class AmbientesListViewer extends ListActivity {
 	
 	private static final int INSERIR_EDITAR = 1;
 	private static final int BUSCAR = 2;

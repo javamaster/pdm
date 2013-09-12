@@ -1,10 +1,13 @@
 package br.edu.ifpb.view;
 
 import java.util.Date;
-import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -25,8 +28,9 @@ import android.widget.Toast;
 import br.edu.ifpb.R;
 import br.edu.ifpb.dao.AmbienteDao;
 import br.edu.ifpb.model.Ambiente;
+import br.edu.ifpb.services.GPSTeste;
 
-public class Screen_ccadastro extends Activity implements OnItemSelectedListener,LocationListener{
+public class CadastroEdicaoViewer extends Activity implements OnItemSelectedListener,LocationListener{
 
 	@SuppressWarnings("unused")
 	private Ambiente ambiente;
@@ -40,6 +44,7 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 	campoLongitude, campoPerfil;
 	private LocationManager manager;
 	private Location location;
+	private boolean isProviderEnabled = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +128,7 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 			}
 		});
 		Spinner spinner = (Spinner) findViewById(R.id.spinner_ringtone);
+		spinner.setBackgroundColor(Color.GRAY);
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ringtone_modes, android.R.layout.simple_spinner_item);
 
@@ -152,26 +158,35 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 
 	private void configuraGps(){
 		
+		
+		
 		manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		
 		
 		Criteria criteria = new Criteria();
 		
 		String provider = manager.getBestProvider(criteria, false);
 		
-		location = manager.getLastKnownLocation(provider);
+		isProviderEnabled = manager.isProviderEnabled(provider);
 		
-		LocationListener myListener = new MyLocationListner();
+		if(isProviderEnabled){
 		
-		manager.requestLocationUpdates(provider,0 , 0, this);
-		
-		if(location != null){
-			Log.i("Localizacao", "Latitude: "+location.getLatitude()+" \n Longitude: "+location.getLongitude());
-			onLocationChanged(location);
+				location = manager.getLastKnownLocation(provider);
+				
+				manager.requestLocationUpdates(provider,0 , 0, this);
+				
+				if(location != null){
+					Log.i("Localizacao", "Latitude: "+location.getLatitude()+" \n Longitude: "+location.getLongitude());
+					onLocationChanged(location);
+				}
+				else{
+					Log.i("Localizacao", "Localização não definida!!");
+					campoLatitude.setText("0.0");
+					campoLongitude.setText("0.0");
+				}
 		}
 		else{
-			Log.i("Localizacao", "Localização não definida!!");
-			campoLatitude.setText("0.0");
-			campoLongitude.setText("0.0");
+			onProviderDisabled(provider);
 		}
 	}
 	
@@ -193,6 +208,7 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 			
 			loc.setLatitude(Double.valueOf(campoLatitude.getText().toString()));
 			loc.setLongitude(Double.valueOf(campoLongitude.getText().toString()));
+			
 		} catch (NumberFormatException e) {
 			Toast.makeText(this, "Raio: "+e.getMessage(), Toast.LENGTH_SHORT);
 			return;
@@ -307,34 +323,7 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 		
 	}
 		
-	class MyLocationListner implements LocationListener{
-
-		@Override
-		public void onLocationChanged(Location location) {
-			updateLocation(location);						
-		}
-
-		@Override
-		public void onProviderDisabled(String provider) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void onProviderEnabled(String provider) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		
-	}
-
+	
 	@Override
 	public void onLocationChanged(Location location) {
 		updateLocation(location);		
@@ -342,12 +331,38 @@ public class Screen_ccadastro extends Activity implements OnItemSelectedListener
 	
 	@Override
 	public void onProviderDisabled(String arg0) {
-		// TODO Auto-generated method stub
+		AlertDialog.Builder builder = new AlertDialog.Builder(CadastroEdicaoViewer.this);
+		builder.setMessage("Your GPS is disabled! Would you like to enable it?").setCancelable(false).
+		setPositiveButton("GPS enabled", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialogInterface, int arg) {
+				
+				Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+				startActivity(gpsOptionsIntent);
+				
+			}
+		});
+		
+		builder.setNegativeButton("Do nothing", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int arg1) {
+				
+				dialog.cancel();
+				
+			}
+		});
+		
+		AlertDialog alert = builder.create();
+		alert.show();
+		
 		
 	}
 	@Override
-	public void onProviderEnabled(String arg0) {
-		// TODO Auto-generated method stub
+	public void onProviderEnabled(String provider) {
+		
+		Toast.makeText(this, "Provedor de localzação definido: "+provider, Toast.LENGTH_SHORT).show();
 		
 	}
 	@Override

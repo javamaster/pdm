@@ -25,6 +25,7 @@ import br.edu.ifpb.model.Ambiente;
 import br.edu.ifpb.testes.MyApplication;
 import br.edu.ifpb.util.GeoCoordinate;
 import br.edu.ifpb.util.GeoUtils;
+import br.edu.ifpb.view.CadastroEdicaoViewer;
 
 public class GPSTeste extends Service{
 	
@@ -68,9 +69,15 @@ public class GPSTeste extends Service{
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		super.onStartCommand(intent, flags, startId);
+		
 		this.dao = new AmbienteDao(getApplicationContext());
+		
 		Log.d("Context", String.valueOf(getApplicationContext()));
+
+		//Recuperar a lista de ambintes do banco
 		ambientes = getListAmbientes();
+		
+		//imprimir a lista de ambientes 
 		printAmbientes();
 		addLocationListner();
 		
@@ -79,6 +86,7 @@ public class GPSTeste extends Service{
 	}
 	
 	public void  printAmbientes() {
+		
 		if(ambientes!=null){
 			for (int i = 0; i < ambientes.size(); i++) {
 				Log.i("Ambiente", ambientes.get(i).toString());
@@ -91,6 +99,9 @@ public class GPSTeste extends Service{
 	public List<Ambiente>  getListAmbientes() {
 		try {
 			
+			//Abrindo conexão com o banco sqlite
+			dao.open();
+			
 			if(dao != null){
 				return dao.getAll();
 			}
@@ -99,7 +110,7 @@ public class GPSTeste extends Service{
 			}
 			
 		} catch (Exception e) {
-			Log.e("Error", "Não recupera a lista de ambientes");
+			Log.e("Error", "Não recupera a lista de ambientes - error -> "+e.getMessage());
 			dao.close();
 		}
 		return null;
@@ -252,7 +263,7 @@ public class GPSTeste extends Service{
 	} 
 	    
 	   
-	public double calculateDistanceInMeters(GeoCoordinate geo, GeoCoordinate geo2 ){
+	public double calculateDistanceInMeters(GeoCoordinate geo, GeoCoordinate geo2){
 		return (GeoUtils.geoDistanceInKm(geo, geo2))*1000;
 	}
 	    
@@ -309,31 +320,31 @@ public class GPSTeste extends Service{
 		@Override
 		public void onProviderDisabled(String provider) {
 			
-//			AlertDialog.Builder builder = new AlertDialog.Builder(GPSTeste.this);
-//			builder.setMessage("Your GPS is disabled! Would you like to enable it?").setCancelable(false).
-//			setPositiveButton("GPS enabled", new DialogInterface.OnClickListener() {
-//				
-//				@Override
-//				public void onClick(DialogInterface dialogInterface, int arg) {
-//					
-//					Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS);
-//					startActivity(gpsOptionsIntent);
-//					
-//				}
-//			});
-//			
-//			builder.setNegativeButton("Do nothing", new DialogInterface.OnClickListener() {
-//				
-//				@Override
-//				public void onClick(DialogInterface dialog, int arg1) {
-//					
-//					dialog.cancel();
-//					
-//				}
-//			});
-//			
-//			AlertDialog alert = builder.create();
-//			alert.show();
+			AlertDialog.Builder builder = new AlertDialog.Builder(GPSTeste.this);
+			builder.setMessage("Your GPS is disabled! Would you like to enable it?").setCancelable(false).
+			setPositiveButton("GPS enabled", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialogInterface, int arg) {
+					
+					Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS);
+					startActivity(gpsOptionsIntent);
+					
+				}
+			});
+			
+			builder.setNegativeButton("Do nothing", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int arg1) {
+					
+					dialog.cancel();
+					
+				}
+			});
+			
+			AlertDialog alert = builder.create();
+			alert.show();
 		}
 
 		@Override

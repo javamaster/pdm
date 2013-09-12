@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class ConfigsService extends Activity {
+public class ConfigsServiceViewer extends Activity {
 	
 	private ToggleButton iniciarServiceTB;
 	private final Intent GPSTesteIT = new Intent("SERVICE_3");

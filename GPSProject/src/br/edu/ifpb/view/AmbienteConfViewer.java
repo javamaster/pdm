@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class AmbienteConf extends ListActivity {
+public class AmbienteConfViewer extends ListActivity {
 	
 	private static final String[] TELAS = new String[]{
 		"Cadastrar","Listar","Sair"};

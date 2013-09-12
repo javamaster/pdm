@@ -143,6 +143,7 @@ public class AmbienteDao {
 				null, null, null, null);
 		
 		if(c.getCount()>0){
+			
 			c.moveToFirst();
 			
 			Location loc = new Location("");

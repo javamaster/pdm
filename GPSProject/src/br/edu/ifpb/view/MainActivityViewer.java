@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import br.edu.ifpb.R;
 
-public class MainActivity extends Activity implements LocationListener {
+public class MainActivityViewer extends Activity implements LocationListener {
 
 	private LocationManager manager;
 	private TextView longitudetxt;
@@ -67,13 +67,13 @@ public class MainActivity extends Activity implements LocationListener {
 		Location location = manager.getLastKnownLocation(provider);
 
 		if (location != null) {
-			Log.d("MainActivity", "Provider " + provider + "foi selecionado!!");
+			Log.d("MainActivityViewer", "Provider " + provider + "foi selecionado!!");
 			onLocationChanged(location);
 
 		} else {
 			latitudetxt.setText(R.string.location_not_available);
 			longitudetxt.setText(R.string.location_not_available);
-			Log.d("MainActivity", "Nenhuma localização encontrada!");
+			Log.d("MainActivityViewer", "Nenhuma localização encontrada!");
 		}
 	}
 

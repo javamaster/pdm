@@ -48,7 +48,7 @@
         </receiver>
 
         <activity
-            android:name="br.edu.ifpb.view.MainActivity"
+            android:name="br.edu.ifpb.view.MainActivityViewer"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -60,7 +60,7 @@
             android:label="@string/title_activity_main__screen" >
         </activity>
         <activity
-            android:name="br.edu.ifpb.view.Screen_ccadastro"
+            android:name="br.edu.ifpb.view.CadastroEdicaoViewer"
             android:label="@string/title_activity_screen_ccadastro" >
             <intent-filter>
                 <action android:name="Tela_cadastro" />
@@ -69,7 +69,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.edu.ifpb.view.AmbientesList"
+            android:name="br.edu.ifpb.view.AmbientesListViewer"
             android:label="@string/title_ambiente_list" >
             <intent-filter>
                 <action android:name="Amb_list" />
@@ -78,7 +78,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.edu.ifpb.view.AmbienteConf"
+            android:name="br.edu.ifpb.view.AmbienteConfViewer"
             android:label="@string/title_ambiente_conf" >
             <intent-filter>
                 <action android:name="Amb_conf" />
@@ -111,7 +111,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.edu.ifpb.view.ConfigsService"
+            android:name="br.edu.ifpb.view.ConfigsServiceViewer"
             android:label="@string/title_activity_configs_service" >
             <intent-filter>
                 <action android:name="configServiceIT" />

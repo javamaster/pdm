@@ -106,11 +106,16 @@ public class Ambiente {
 		this.raio = raio;
 		this.descricao = descricao;
 	}
+
+
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return "Nome: "+getNome()+" Raio: "+getRaio();
+		return "Ambiente [id=" + id + ", nome=" + nome + ", data_persist="
+				+ data_persist + ", location=" + location + ", raio=" + raio
+				+ ", descricao=" + descricao + ", perfil=" + perfil + "]";
 	}
+	
+	
 }
 
 
