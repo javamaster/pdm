@@ -1,20 +1,17 @@
 package br.edu.ifpb.view;
 
-import br.edu.ifpb.R;
-import br.edu.ifpb.R.layout;
-import br.edu.ifpb.R.menu;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import br.edu.ifpb.R;
 
 public class ConfigsServiceViewer extends Activity {
 	
-	private ToggleButton iniciarServiceTB;
 	private final Intent GPSTesteIT = new Intent("SERVICE_3");
 
 	@Override

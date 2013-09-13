@@ -119,7 +119,7 @@ public class AmbienteDao {
 		 
 		 String[] whereArgs = new String[]{id};
 		 
-		 int count = atualizar(values, where, whereArgs);
+		 atualizar(values, where, whereArgs);
 		 
 	}
 	

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.ComponentName;
@@ -22,10 +21,8 @@ import android.os.Looper;
 import android.util.Log;
 import br.edu.ifpb.dao.AmbienteDao;
 import br.edu.ifpb.model.Ambiente;
-import br.edu.ifpb.testes.MyApplication;
 import br.edu.ifpb.util.GeoCoordinate;
 import br.edu.ifpb.util.GeoUtils;
-import br.edu.ifpb.view.CadastroEdicaoViewer;
 
 public class GPSTeste extends Service{
 	
@@ -42,8 +39,8 @@ public class GPSTeste extends Service{
 	boolean canGetLocation = false;
 	
 	// Distancia minima, em metros, para atualizar 
-	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
-	private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
+	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0;
+	private static final long MIN_TIME_BW_UPDATES = 0;
 	private static Ambiente ambienteAtual;
 	
 	private AmbienteDao dao;
@@ -139,7 +136,7 @@ public class GPSTeste extends Service{
 						Log.d(PROVIDER, "MELHOR PROVEDOR SELECIONADO: "+provider);
 						
 						
-						locationManager.requestLocationUpdates(provider,0 , 0,listner);
+						locationManager.requestLocationUpdates(provider,MIN_TIME_BW_UPDATES , MIN_DISTANCE_CHANGE_FOR_UPDATES,listner);
 						
 						Location location = locationManager.getLastKnownLocation(provider);
 						

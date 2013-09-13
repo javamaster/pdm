@@ -23,7 +23,7 @@ public class IniciarServico extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.form_service);
 		
-		final Intent it = new Intent("SERVICE_1");
+		//final Intent it = new Intent("SERVICE_1");
 		final Intent GPSTesteIT = new Intent("SERVICE_3");
 		
 		Button btIniciar = (Button) findViewById(R.id.iniciar_bt);

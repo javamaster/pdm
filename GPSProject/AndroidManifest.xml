@@ -117,8 +117,7 @@
                 <action android:name="configServiceIT" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            
+            </intent-filter>            
         </activity>
     </application>
 

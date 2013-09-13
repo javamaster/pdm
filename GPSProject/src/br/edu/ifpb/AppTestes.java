@@ -1,7 +1,6 @@
 package br.edu.ifpb;
 
 import java.util.Date;
-import java.util.List;
 
 import android.app.Activity;
 import android.location.Location;
