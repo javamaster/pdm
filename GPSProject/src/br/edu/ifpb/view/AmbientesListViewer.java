@@ -3,7 +3,6 @@ package br.edu.ifpb.view;
 import java.util.List;
 
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +18,6 @@ public class AmbientesListViewer extends ListActivity {
 	
 	private static final int INSERIR_EDITAR = 1;
 	private static final int BUSCAR = 2;
-	private static Context contexto;
 	
 	private List<Ambiente> ambientes;
 	private AmbienteDao dao = new AmbienteDao(this);

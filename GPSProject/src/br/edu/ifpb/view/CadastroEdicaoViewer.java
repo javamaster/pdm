@@ -28,7 +28,6 @@ import android.widget.Toast;
 import br.edu.ifpb.R;
 import br.edu.ifpb.dao.AmbienteDao;
 import br.edu.ifpb.model.Ambiente;
-import br.edu.ifpb.services.GPSTeste;
 
 public class CadastroEdicaoViewer extends Activity implements OnItemSelectedListener,LocationListener{
 
@@ -41,7 +40,7 @@ public class CadastroEdicaoViewer extends Activity implements OnItemSelectedList
 	
 	private AmbienteDao dao;
 	private EditText campoNome, campoRaio, campoLatitude,
-	campoLongitude, campoPerfil;
+	campoLongitude;
 	private LocationManager manager;
 	private Location location;
 	private boolean isProviderEnabled = false;
