@@ -4,7 +4,7 @@ package br.com.mau;
 /**
  * Utilitário para operações geográficas
  * 
- * @author Thiago Galbiatti Vespa
+ * @author Mauricio Batista
  */
 public class GeoUtils {
 
