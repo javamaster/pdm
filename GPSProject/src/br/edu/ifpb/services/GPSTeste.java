@@ -68,8 +68,6 @@ public class GPSTeste extends Service{
 		super.onStartCommand(intent, flags, startId);
 		
 		this.dao = new AmbienteDao(getApplicationContext());
-		
-		Log.d("Context", String.valueOf(getApplicationContext()));
 
 		//Recuperar a lista de ambintes do banco
 		ambientes = getListAmbientes();
@@ -96,10 +94,11 @@ public class GPSTeste extends Service{
 	public List<Ambiente>  getListAmbientes() {
 		try {
 			
-			//Abrindo conexão com o banco sqlite
-			dao.open();
-			
 			if(dao != null){
+				
+				//Abrindo conexão com o banco sqlite
+				dao.open();
+				
 				return dao.getAll();
 			}
 			else{
@@ -209,7 +208,7 @@ public class GPSTeste extends Service{
 		latitude = location.getLatitude();
 		longitude = location.getLongitude();
 		
-		GeoCoordinate coordinate = new GeoCoordinate(latitude, longitude);
+		GeoCoordinate coordinateAtual = new GeoCoordinate(latitude, longitude);
 		
 		Log.d("Latitude do Emulador ", String.valueOf(latitude));
 	    Log.d("Longitude do Emulador ", String.valueOf(longitude));
@@ -221,20 +220,20 @@ public class GPSTeste extends Service{
 	    	Location loc = ambienteAtual.getLocation();
 	    	
 			GeoCoordinate coordinateAnterior = new GeoCoordinate(loc.getLatitude(), loc.getLongitude());
-			double distance2 = GeoUtils.geoDistanceInKm(coordinate, coordinateAnterior)*1000;
+			double distance2 = GeoUtils.geoDistanceInKm(coordinateAtual, coordinateAnterior)*1000;
 			
 			if(distance2>ambienteAtual.getRaio()){
 				//altera conf para outro ambiente
 				Log.d(AMBIENTE, "Não está mais dentro do ambiente "+ambienteAtual.getNome());
 				ambienteAtual = null;
 				ambienteSelected = false;
-				updateAmbiente(coordinate);
+				updateAmbiente(coordinateAtual);
 			}
 			else{
 				Log.d(AMBIENTE, "Usuario continua dentro do ambiente "+ambienteAtual.getNome());
 			}
 		}else{
-			updateAmbiente(coordinate);
+			updateAmbiente(coordinateAtual);
 		}
 	}
 	 
