@@ -33,9 +33,8 @@ public class CadastroEdicaoViewer extends Activity implements OnItemSelectedList
 
 	@SuppressWarnings("unused")
 	private Ambiente ambiente;
-	private String ringtone_mode_selected;
-	private Button btSave, btCancel;
-	private ImageButton btRemove;
+	private String ringtone_mode_selected;	
+	private ImageButton btRemove, btSave, btCancel;
 	private Long id;
 	
 	private AmbienteDao dao;
@@ -57,8 +56,8 @@ public class CadastroEdicaoViewer extends Activity implements OnItemSelectedList
 		campoLatitude = (EditText) findViewById(R.id.editTextLatitude);
 		campoLongitude = (EditText) findViewById(R.id.editTextLongitude);
 		
-		 btSave = (Button) findViewById(R.id.btSave);
-		 btCancel = (Button) findViewById(R.id.btCancel);
+		 btSave = (ImageButton) findViewById(R.id.btSave);
+		 btCancel = (ImageButton) findViewById(R.id.btCancel);
 		 btRemove = (ImageButton) findViewById(R.id.btRemove);
 		 
 		 dao = new AmbienteDao(this);
@@ -325,7 +324,8 @@ public class CadastroEdicaoViewer extends Activity implements OnItemSelectedList
 	
 	@Override
 	public void onLocationChanged(Location location) {
-		updateLocation(location);		
+		if(id == null)
+			updateLocation(location);		
 	}
 	
 	@Override

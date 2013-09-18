@@ -110,9 +110,7 @@ public class Ambiente {
 
 	@Override
 	public String toString() {
-		return "Ambiente [id=" + id + ", nome=" + nome + ", data_persist="
-				+ data_persist + ", location=" + location + ", raio=" + raio
-				+ ", descricao=" + descricao + ", perfil=" + perfil + "]";
+		return "Nome: "+nome+"\nLatitude "+location.getLatitude()+"\nLongitude "+location.getLongitude()+"\nRaio "+raio;
 	}
 	
 	

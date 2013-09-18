@@ -110,30 +110,34 @@
         android:layout_toRightOf="@+id/textView2"
         android:paddingBottom="10dp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btSave"
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignRight="@+id/textView2"
         android:layout_alignTop="@+id/btCancel"
         android:background="#BEBEBE"
         android:text="@string/btSave"
+        android:src="@drawable/add"
+        android:contentDescription="@string/desc"
         android:textColor="#FFFFFF" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btCancel"
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_below="@+id/spinner_ringtone"
         android:layout_centerHorizontal="true"
         android:background="#BEBEBE"
         android:text="@string/btCancel"
+        android:src="@drawable/abort"
+        android:contentDescription="@string/desc"
         android:textColor="#FFFFFF" />
 
     <ImageButton
         android:id="@+id/btRemove"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
         android:layout_alignRight="@+id/spinner_ringtone"
         android:layout_alignTop="@+id/btCancel"
         android:src="@drawable/remove" 
